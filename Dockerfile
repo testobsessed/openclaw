@@ -147,9 +147,7 @@ LABEL org.opencontainers.image.source="https://github.com/openclaw/openclaw" \
   org.opencontainers.image.description="OpenClaw gateway and CLI runtime container image"
 
 WORKDIR /app
-
-RUN npm install -g @googleworkspace/cli
-
+  
 # Install system utilities present in bookworm but missing in bookworm-slim.
 # On the full bookworm image these are already installed (apt-get is a no-op).
 # Smoke workflows can opt out of distro upgrades to cut repeated CI time while
@@ -248,6 +246,15 @@ RUN --mount=type=cache,id=openclaw-bookworm-apt-cache,target=/var/cache/apt,shar
       DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         docker-ce-cli docker-compose-plugin; \
     fi
+
+# Install gog
+RUN wget -q https://github.com/steipete/gogcli/releases/download/v0.12.0/gogcli_0.12.0_linux_amd64.tar.gz \
+  -O /tmp/gogcli.tar.gz \
+  && tar -xzf /tmp/gogcli.tar.gz -C /tmp \
+  && mv /tmp/gog /usr/local/bin/gog \
+  && chmod +x /usr/local/bin/gog \
+  && gog --version \
+  && rm -f /tmp/gogcli.tar.gz
 
 # Expose the CLI binary without requiring npm global writes as non-root.
 RUN ln -sf /app/openclaw.mjs /usr/local/bin/openclaw \
