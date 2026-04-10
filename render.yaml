@@ -4,6 +4,8 @@ services:
     runtime: docker
     plan: starter
     healthCheckPath: /health
+    envVarGroups:
+      - name: lennox-env
     envVars:
       - key: OPENCLAW_GATEWAY_PORT
         value: "8080"
