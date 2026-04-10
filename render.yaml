@@ -1,5 +1,5 @@
 services:
-  - type: web
+  - type: worker
     name: openclaw
     runtime: docker
     plan: starter
