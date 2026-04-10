@@ -148,6 +148,8 @@ LABEL org.opencontainers.image.source="https://github.com/openclaw/openclaw" \
 
 WORKDIR /app
 
+RUN npm install -g @googleworkspace/cli
+
 # Install system utilities present in bookworm but missing in bookworm-slim.
 # On the full bookworm image these are already installed (apt-get is a no-op).
 # Smoke workflows can opt out of distro upgrades to cut repeated CI time while
