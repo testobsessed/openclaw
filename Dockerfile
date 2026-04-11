@@ -260,16 +260,16 @@ RUN wget -q https://github.com/steipete/gogcli/releases/download/v0.12.0/gogcli_
 RUN ln -sf /app/openclaw.mjs /usr/local/bin/openclaw \
  && chmod 755 /app/openclaw.mjs
 
+COPY scripts/docker/entrypoint.sh /usr/local/bin/gog-entrypoint.sh
+RUN chmod +x /usr/local/bin/gog-entrypoint.sh
+ENTRYPOINT ["/usr/local/bin/gog-entrypoint.sh"]
+
 ENV NODE_ENV=production
 
 # Security hardening: Run as non-root user
 # The node:24-bookworm image includes a 'node' user (uid 1000)
 # This reduces the attack surface by preventing container escape via root privileges
 USER node
-
-COPY scripts/docker/entrypoint.sh /usr/local/bin/gog-entrypoint.sh
-RUN chmod +x /usr/local/bin/gog-entrypoint.sh
-ENTRYPOINT ["/usr/local/bin/gog-entrypoint.sh"]
 
 # Start gateway server with default config.
 # Binds to loopback (127.0.0.1) by default for security.
