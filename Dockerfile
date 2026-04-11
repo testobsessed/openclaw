@@ -267,9 +267,9 @@ ENV NODE_ENV=production
 # This reduces the attack surface by preventing container escape via root privileges
 USER node
 
-COPY scripts/docker/entrypoint.sh /usr/local/bin/docker-entrypoint.sh
-# RUN chmod +x /usr/local/bin/docker-entrypoint.sh
-# ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
+COPY scripts/docker/entrypoint.sh /usr/local/bin/gog-entrypoint.sh
+# RUN chmod +x /usr/local/bin/gog-entrypoint.sh
+# ENTRYPOINT ["/usr/local/bin/gog-entrypoint.sh"]
 
 # Start gateway server with default config.
 # Binds to loopback (127.0.0.1) by default for security.
